@@ -11,7 +11,7 @@
 
 <head>
 	<!-- Basic need -->
-	<title>Open Pediatrics</title>
+	<title>Movie Management System</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="">
 	<meta name="keywords" content="">

@@ -3,16 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Employee;
-
+use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('users.index');
 });
 Route::get('/adm', function () {
     return view('admin.dashboard');
 });
-Route::get('/allusers', function () {
-    return view('admin.allusers');
-});
+
 //User Middleware
 Route::middleware([
     'auth:sanctum',
@@ -37,10 +35,12 @@ Route::middleware([
 //Admin Middleware
 Route::middleware([Admin::class])->group(function(){
 
-
+Route::get('/allusers', [AdminController::class,('getallusers')]);
+Route::get('/trashusers', [AdminController::class,('removedusers')]);
+Route::post('/removeuser/{id}',[AdminController::class,('removeuser')]);
+Route::post('/trashuser/{id}',[AdminController::class,('trashuser')]);
+Route::get('/adduser',function(){
+    return view('admin.adduser');
 });
-//Employee Middleware
-Route::middleware([Admin::class])->group(function(){
-
-    
+Route::post('/insertuser',[AdminController::class,('addnewuser')]);
 });

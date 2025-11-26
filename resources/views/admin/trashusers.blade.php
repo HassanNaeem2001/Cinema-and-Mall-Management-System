@@ -4,7 +4,7 @@
 
 </style>
 <div class="content-wrapper">
-    <h3>Record of All Users</h3>
+    <h3>In-Active Users</h3>
     <hr>
     <div
         class="table-responsive"
@@ -28,10 +28,10 @@
                     <td>{{$u->role}}</td>
                     <td>
                         <div class="d-flex">
-                            <button class="btn btn-primary mx-1">Edit Details</button>
-                        <form action="/trashuser/{{$u->id}}" method="post" onsubmit="return confirm('Are you sure you want to remove this user?');">
+                            <button class="btn btn-primary mx-1">Restore</button>
+                        <form action="/removeuser/{{$u->id}}" method="post" onsubmit="return confirm('Are you sure you want to remove this user?');">
                             @csrf
-                            <button type="submit" class="btn btn-danger mx-1">Remove</button>
+                            <button type="submit" class="btn btn-danger mx-1">Delete User</button>
                         </form>
                         </div>
                     </td>

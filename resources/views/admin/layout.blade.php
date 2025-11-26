@@ -102,8 +102,8 @@
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/allusers">All Users</a></li>
-                <li class="nav-item"> <a class="nav-link" href="">Add User</a></li>
-                <li class="nav-item"> <a class="nav-link" href="">Trash</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/adduser">Add User</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/trashusers">Trash</a></li>
               </ul>
             </div>
           </li>
@@ -351,7 +351,7 @@
                     <div class="preview-item-content">
                      <form action="/logout" method="post">
                       @csrf
-                       <button type="submit" class="preview-subject mb-1 btn">Logout</button>
+                       <button type="submit" class="" style="background-color:transparent;border:none;color:white">Logout</button>
                      </form>
                     </div>
                   </a>
