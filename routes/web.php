@@ -17,20 +17,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-       if(Auth::user()->role == "Admin")
-       {
-          return view('admin.dashboard');
-       }
-       else if(Auth::user()->role == "Employee")
-       {
-        return response()->json("Employee Dashboard is Under Maintenance");
-       }
-       else
-       {
-        return redirect('/');
-       }
-    })->name('dashboard');
+    Route::get('/dashboard', [AdminController::class,('switchdashboards')])->name('dashboard');
 });
 //Admin Middleware
 Route::middleware([Admin::class])->group(function(){
@@ -43,4 +30,10 @@ Route::get('/adduser',function(){
     return view('admin.adduser');
 });
 Route::post('/insertuser',[AdminController::class,('addnewuser')]);
+Route::post('restoreuser/{id}',[AdminController::class,('restoreuser')]);
+Route::get('/addmoviecategory',[AdminController::class,('addcategories')]);
+Route::post('/uploadcategory',[AdminController::class,('uploadcategory')]);
+Route::post('/editcategory/{id}',[AdminController::class,('editcategory')]);
+Route::post('/updatenewcategory/{id}',[AdminController::class,('updatenewcategory')]);
+Route::post('/removecategory/{id}',[AdminController::class,('removecateory')]);
 });

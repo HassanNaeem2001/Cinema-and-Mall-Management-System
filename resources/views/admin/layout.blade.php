@@ -84,7 +84,7 @@
             <span class="nav-link">Navigation</span>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="/adm">
+            <a class="nav-link" href="/dashboard">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -104,6 +104,22 @@
                 <li class="nav-item"> <a class="nav-link" href="/allusers">All Users</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/adduser">Add User</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/trashusers">Trash</a></li>
+              </ul>
+            </div>
+          </li>
+                <li class="nav-item menu-items">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+              <span class="menu-title">Upload Movies</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic2">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="#">All Movies</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">Add Movie</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/addmoviecategory">Categories</a></li>
               </ul>
             </div>
           </li>
