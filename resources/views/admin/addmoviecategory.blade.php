@@ -31,7 +31,7 @@
     <form action="/uploadcategory" method="post">
         @csrf
         <input type="hidden" id="catid" name="categoryid">
-        <input type="text" id="catname" name="categoryname" placeholder="Enter Category Name" class="form-control">
+        <input type="text" id="catname" onkeyup="showaddbtn()" name="categoryname" placeholder="Enter Category Name" class="form-control">
         <br>
         <button id="btnadd" type="submit" class="btn btn-dark btn-lg">Add Category</button>
        
@@ -91,6 +91,7 @@
                 $('#btnadd').hide();
                 $('#btnupdate').show();
                 $('#catid').val(id)
+                
             }
         })
     }
@@ -115,6 +116,15 @@
                 }
             }
         })
+    }
+    function showaddbtn()
+    {
+        var inp = $('#catname').val()
+        if(inp == "")
+        {
+            $('#btnadd').show();
+            $('#btnupdate').hide()
+        }
     }
 </script>
 @endsection

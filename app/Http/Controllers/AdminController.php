@@ -98,4 +98,9 @@ class AdminController extends Controller
         $category->delete();
         return redirect()->back()->with('Deletemsg','Category Deleted');
     }
+    public function uploadmovie()
+    {
+        $cat = category::get();
+        return view('admin.addmovie',compact('cat'));
+    }
 }

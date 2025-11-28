@@ -36,4 +36,8 @@ Route::post('/uploadcategory',[AdminController::class,('uploadcategory')]);
 Route::post('/editcategory/{id}',[AdminController::class,('editcategory')]);
 Route::post('/updatenewcategory/{id}',[AdminController::class,('updatenewcategory')]);
 Route::post('/removecategory/{id}',[AdminController::class,('removecateory')]);
+Route::get('/uploadmovie',[AdminController::class,('uploadmovie')]);
+Route::get('/uploadcinema',function(){
+    return view('admin.uploadcinema');
+});
 });

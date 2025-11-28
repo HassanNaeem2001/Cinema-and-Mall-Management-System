@@ -118,17 +118,17 @@
             <div class="collapse" id="ui-basic2">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="#">All Movies</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Add Movie</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/uploadmovie">Add Movie</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/addmoviecategory">Categories</a></li>
               </ul>
             </div>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="/uploadcinema">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
-              <span class="menu-title">Form Elements</span>
+              <span class="menu-title">Upload Cinema</span>
             </a>
           </li>
           <li class="nav-item menu-items">
