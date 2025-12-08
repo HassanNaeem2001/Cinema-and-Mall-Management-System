@@ -40,4 +40,6 @@ Route::get('/uploadmovie',[AdminController::class,('uploadmovie')]);
 Route::get('/uploadcinema',function(){
     return view('admin.uploadcinema');
 });
+Route::post('/addamovie',[AdminController::class,('addmovie')]);
+Route::get('/allmovies',[AdminController::class,('allmovies')]);
 });

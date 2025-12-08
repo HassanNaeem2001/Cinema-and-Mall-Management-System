@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\category;
+use App\Models\movie;
 use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
@@ -102,5 +103,32 @@ class AdminController extends Controller
     {
         $cat = category::get();
         return view('admin.addmovie',compact('cat'));
+    }
+    public function addmovie(Request $req)
+    {
+       $moviename = $req->moviename;
+       $moviedescription = $req->moviedescription;
+       $thumbnail = $req->file('moviethumbnail');
+       $trailerlink = $req->movietrailer;
+       $premierdate = $req->premierdate;
+       $categoryid = $req->moviecategory;
+       
+       $thumbnailname = $thumbnail->getClientOriginalName();
+        $thumbnail->move('thumbnails/',$thumbnailname);
+         $table = new movie();
+            $table->moviename = $moviename;
+            $table->moviedescription = $moviedescription;
+            $table->thumbnail = $thumbnailname;
+            $table->trailerlink = $trailerlink;
+            $table->premierdate = $premierdate;
+            $table->categoryid = $categoryid;
+            $table->save();
+
+       return redirect()->back()->with('Successmsg','Movie has been added successfully');   
+    }
+    public function allmovies()
+    {
+        $movies = movie::join('categories','categories.id','movies.categoryid')->get();
+        return view('admin.allmovies',compact('movies'));
     }
 }

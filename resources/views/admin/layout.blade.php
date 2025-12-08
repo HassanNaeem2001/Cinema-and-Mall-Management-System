@@ -117,7 +117,7 @@
             </a>
             <div class="collapse" id="ui-basic2">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">All Movies</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/allmovies">All Movies</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/uploadmovie">Add Movie</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/addmoviecategory">Categories</a></li>
               </ul>
