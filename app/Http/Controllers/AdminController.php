@@ -128,7 +128,7 @@ class AdminController extends Controller
     }
     public function allmovies()
     {
-        $movies = movie::join('categories','categories.id','movies.categoryid')->get();
+        $movies = movie::join('categories','categories.id','movies.categoryid')->paginate(10);
         return view('admin.allmovies',compact('movies'));
     }
 }
