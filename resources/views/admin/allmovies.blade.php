@@ -18,8 +18,31 @@
 }
 
 </style>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 <div class="content-wrapper">
     <h3>All Movies</h3>
+    @if(session('Successmsg'))
+    <script>
+    Toastify({
+  text: "This movie is now featured successfully!",
+  duration: 3000,
+  destination: "https://github.com/apvarun/toastify-js",
+  newWindow: true,
+  close: true,
+  gravity: "bottom", // `top` or `bottom`
+  position: "right", // `left`, `center` or `right`
+  stopOnFocus: true, // Prevents dismissing of toast on hover
+  style: {
+    background: "linear-gradient(to right, #28e417ff, #3b5c03ff)",
+  },
+  onClick: function(){} // Callback after click
+}).showToast();
+    </script>
+    @endif
+   
+    
     <hr>
     <div
         class="table-responsive"
@@ -41,7 +64,8 @@
             <tbody>
                 @foreach($movies as $movie)
                   <tr class="">
-                    <td>{{$loop->iteration}}</td>
+                   <td>{{ $movies->firstItem() + $loop->index }}</td>
+
                     <td scope="row"><img src="thumbnails/{{$movie->thumbnail}}" alt="" width="300px"></td>
                     <td>{{$movie->moviename}}</td>
                     <td>{{$movie->categoryname}}</td>
@@ -58,7 +82,8 @@
                             <form action="">
                                 <button type="submit" class="btn btn-primary mx-1">Edit</button>
                             </form>
-                            <form action="">
+                            <form action="/featuremovie/{{ $movies->firstItem() + $loop->index }}" method="POST">
+                                @csrf
                                 <button type="submit" class="btn btn-success mx-1">Feature This</button>
                             </form>
                             <form action="{{url('admin/deletemovie/'.$movie->id)}}" method="POST">
@@ -81,4 +106,6 @@
     </div>
     
 </div>
+
+
 @endsection

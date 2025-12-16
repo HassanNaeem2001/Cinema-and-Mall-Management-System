@@ -131,4 +131,11 @@ class AdminController extends Controller
         $movies = movie::join('categories','categories.id','movies.categoryid')->paginate(10);
         return view('admin.allmovies',compact('movies'));
     }
+    public function featuremovie($id)
+    {
+        $movie = movie::find($id);
+        $movie->isfeatured = "yes";
+        $movie->save();
+        return redirect()->back()->with('Successmsg','Movie feature status has been updated');
+    }
 }

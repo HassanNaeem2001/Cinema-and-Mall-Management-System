@@ -42,4 +42,5 @@ Route::get('/uploadcinema',function(){
 });
 Route::post('/addamovie',[AdminController::class,('addmovie')]);
 Route::get('/allmovies',[AdminController::class,('allmovies')]);
+Route::post('/featuremovie/{id}',[AdminController::class,('featuremovie')]);
 });
