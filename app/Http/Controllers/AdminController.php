@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\category;
 use App\Models\movie;
+use App\Models\cinema;
 use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
@@ -137,5 +138,17 @@ class AdminController extends Controller
         $movie->isfeatured = "yes";
         $movie->save();
         return redirect()->back()->with('Successmsg','Movie feature status has been updated');
+    }
+    public function uploadcinema(Request $req)
+    {
+        $cinemaname = $req->cinemaname;
+        $seatingcapacity = $req->seatingcapacity;
+
+        $table = new cinema();
+        $table->cinema_name = $cinemaname;
+        $table->seating_capacity = $seatingcapacity;
+        $table->save();
+
+        return redirect()->back()->with('Successmsg','Cinema has been added successfully');
     }
 }

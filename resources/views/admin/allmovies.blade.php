@@ -1,111 +1,178 @@
 @extends('admin.layout')
+
 @section('admincontent')
+
+{{-- ================= STYLES ================= --}}
 <style>
-    .page-link {
+.page-link {
     background-color: #222;
     color: #fff;
     border-color: #444;
 }
-
 .page-item.active .page-link {
     background-color: grey;
     border-color: white;
 }
-
 .page-link:hover {
     background-color: black;
-    color:white
+    color: white;
 }
-
 </style>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <div class="content-wrapper">
     <h3>All Movies</h3>
+
+    {{-- ================= TOAST ================= --}}
     @if(session('Successmsg'))
     <script>
-    Toastify({
-  text: "This movie is now featured successfully!",
-  duration: 3000,
-  destination: "https://github.com/apvarun/toastify-js",
-  newWindow: true,
-  close: true,
-  gravity: "bottom", // `top` or `bottom`
-  position: "right", // `left`, `center` or `right`
-  stopOnFocus: true, // Prevents dismissing of toast on hover
-  style: {
-    background: "linear-gradient(to right, #28e417ff, #3b5c03ff)",
-  },
-  onClick: function(){} // Callback after click
-}).showToast();
+        Toastify({
+            text: "This movie is now featured successfully!",
+            duration: 3000,
+            close: true,
+            gravity: "bottom",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #28e417, #3b5c03)",
+            },
+        }).showToast();
     </script>
     @endif
-   
-    
+
     <hr>
-    <div
-        class="table-responsive"
-    >
-        <table
-            class="table table-dark table-bordered text-center table-hover"
-        >
+
+    {{-- ================= TABLE ================= --}}
+    <div class="table-responsive">
+        <table class="table table-dark table-bordered text-center table-hover">
             <thead>
                 <tr>
-                    <th scope="col" class="text-white">S.No</th>
-                    <th scope="col" class="text-white">ThumbNail</th>
-                    <th scope="col" class="text-white">Movie Name</th>
-                    <th scope="col" class="text-white">Category</th>
-                    <th scope="col" class="text-white">First Premier Date</th>
-                    <th class="text-white">Now Featuring</th>
-                    <th class="text-white">Operations</th>
+                    <th>S.No</th>
+                    <th>Thumbnail</th>
+                    <th>Movie Name</th>
+                    <th>Category</th>
+                    <th>Premier Date</th>
+                    <th>Featured</th>
+                    <th>Operations</th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach($movies as $movie)
-                  <tr class="">
-                   <td>{{ $movies->firstItem() + $loop->index }}</td>
+                <tr>
+                    <td>{{ $movies->firstItem() + $loop->index }}</td>
 
-                    <td scope="row"><img src="thumbnails/{{$movie->thumbnail}}" alt="" width="300px"></td>
-                    <td>{{$movie->moviename}}</td>
-                    <td>{{$movie->categoryname}}</td>
+                    <td>
+                        <img src="{{ asset('thumbnails/'.$movie->thumbnail) }}" width="300">
+                    </td>
+
+                    <td>{{ $movie->moviename }}</td>
+                    <td>{{ $movie->categoryname }}</td>
                     <td>{{ date('d-F-Y', strtotime($movie->premierdate)) }}</td>
-                    <td class="text-white">
-                        @if($movie->isfeatured == "yes")
-                        <span class="badge badge-success">Yes</span>
+
+                    <td>
+                        @if($movie->isfeatured === 'yes')
+                            <span class="badge bg-success">Yes</span>
                         @else
-                       <span class="badge badge-danger">No</span>
+                            <span class="badge bg-danger">No</span>
                         @endif
                     </td>
+
                     <td>
-                        <div class="d-flex">
-                            <form action="">
-                                <button type="submit" class="btn btn-primary mx-1">Edit</button>
-                            </form>
-                            <form action="/featuremovie/{{ $movies->firstItem() + $loop->index }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-success mx-1">Feature This</button>
-                            </form>
-                            <form action="{{url('admin/deletemovie/'.$movie->id)}}" method="POST">
+                        <div class="d-flex justify-content-center">
+
+                            <a href="{{ url('admin/editmovie/'.$movie->id) }}"
+                               class="btn btn-primary mx-1">
+                                Edit
+                            </a>
+
+                            <button
+                                type="button"
+                                class="btn btn-warning mx-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#featureModal"
+                                data-movie-id="{{ $movie->id }}"
+                            >
+                                Feature Movie
+                            </button>
+
+                            <form action="{{ url('admin/deletemovie/'.$movie->id) }}"
+                                  method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                                <button class="btn btn-danger mx-1"
+                                    onclick="return confirm('Delete this movie?')">
+                                    Delete
+                                </button>
                             </form>
 
                         </div>
                     </td>
-                  </tr>
+                </tr>
                 @endforeach
-               
             </tbody>
         </table>
+
         <div class="d-flex justify-content-center">
             {!! $movies->links() !!}
+        </div>
+    </div>
+</div>
+
+{{-- ================= MODAL (ONLY ONE) ================= --}}
+<div class="modal fade" id="featureModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content bg-dark text-white">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Feature Movie</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    Movie ID:
+                    <strong id="movieIdText"></strong>
+                </p>
+
+                <form method="POST" action="{{ url('admin/feature-movie') }}">
+                    @csrf
+
+                    <input type="hidden" name="movie_id" id="movieIdInput">
+
+                    <select name="cinema_id"
+                            class="form-control bg-dark text-white mt-3">
+                        <option value="">Select Cinema</option>
+                        {{-- Add cinemas here --}}
+                    </select>
+
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
 
         </div>
     </div>
-    
 </div>
 
+{{-- ================= SCRIPTS ================= --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+document.getElementById('featureModal')
+    .addEventListener('show.bs.modal', function (event) {
+
+    let button = event.relatedTarget;
+    let movieId = button.getAttribute('data-movie-id');
+
+    document.getElementById('movieIdText').innerText = movieId;
+    document.getElementById('movieIdInput').value = movieId;
+});
+</script>
 
 @endsection

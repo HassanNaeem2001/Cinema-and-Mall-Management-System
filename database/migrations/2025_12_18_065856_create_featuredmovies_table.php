@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('featuredmovies', function (Blueprint $table) {
+            $table->id();
+            $table->integer('movieid');
+            $table->integer('cinemaid');
+            $table->foreign('movieid')->references('id')->on('movies');
+            $table->foreign('cinemaid')->references('id')->on('cinemas');
+            $table->integer('ticketprice_individual');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('featuredmovies');
+    }
+};
